@@ -1,0 +1,13 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+graphify-out/
+.local/
+.env
+.env.*
+*.pem
+*.key
+*.har
+*.log
+.DS_Store
