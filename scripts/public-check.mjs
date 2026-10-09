@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const excluded = new Set(['.git', '.local', 'node_modules', 'dist', 'test-results', 'playwright-report', 'graphify-out']);
+const excluded = new Set(['.git', '.local', 'node_modules', 'dist', 'test-results', 'playwright-report', 'graphify-out', '__pycache__']);
 export async function sourceFiles(root) {
   const files = [];
   for (const entry of await readdir(root, { withFileTypes: true })) {
@@ -30,7 +30,7 @@ export function contentFindings(text) {
 export async function checkPublicContent(root) {
   const findings = [];
   for (const file of await sourceFiles(root)) {
-    if (/\.(pem|key|har)$|(^|\/)\.env(?:\.|$)/.test(file)) {
+    if (/\.(pem|key|har|pyc)$|(^|\/)\.env(?:\.|$)/.test(file)) {
       findings.push(`${path.relative(root, file)}: forbidden personal artifact`);
       continue;
     }

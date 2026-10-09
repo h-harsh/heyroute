@@ -16,6 +16,10 @@ for (const key of ['host_permissions', 'optional_host_permissions', 'content_scr
 assert.equal(manifest.background.type, 'module');
 assert.ok(manifest.content_security_policy.extension_pages.includes("connect-src 'none'"));
 for (const file of await sourceFiles(root)) {
+  if (/\.py$/.test(file)) {
+    const result = spawnSync('python3', ['-c', 'import ast,sys; ast.parse(open(sys.argv[1]).read(), filename=sys.argv[1])', file], { encoding: 'utf8' });
+    assert.equal(result.status, 0, `${path.relative(root, file)}: ${result.stderr}`);
+  }
   if (/\.(mjs|js)$/.test(file)) {
     const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
     assert.equal(result.status, 0, `${path.relative(root, file)}: ${result.stderr}`);

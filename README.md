@@ -57,7 +57,38 @@ Keep the terminal open. Press Ctrl+C to stop. SSH verifies the server's host key
 and authenticates normally. If a company VPN is connected, it must allow this
 SSH connection; HeyRoute cannot bypass a network block.
 Changing VPNs or networks can interrupt SSH. Rerun the command if the connection
-closes; this version does not install automatic reconnection or an autostart service.
+closes; foreground mode does not reconnect automatically. For macOS login startup
+and reconnection, use the optional managed connection below.
+
+### Automatic reconnection on macOS
+
+Optional: use Python 3.9+ to install a per-user LaunchAgent. Stop the foreground
+SSH command first; the installer refuses an occupied port.
+
+```sh
+python3 scripts/macos-connection.py install private-server
+python3 scripts/macos-connection.py status
+```
+
+macOS starts system OpenSSH at login and restarts it after disconnections, with
+10-second launch throttling. Keepalives detect an unresponsive peer; reconnection
+can take tens of seconds. Reload affected tabs after recovery. The installed job
+uses your existing SSH config and requires noninteractive authentication. It
+cannot unlock your key, approve a new host key, or bypass a blocked SSH connection.
+
+```sh
+python3 scripts/macos-connection.py restart
+python3 scripts/macos-connection.py stop
+python3 scripts/macos-connection.py start
+python3 scripts/macos-connection.py uninstall
+```
+
+Stop also disables login startup until start. Uninstall removes the connection
+config, retaining logs. The generated plist is under `~/Library/LaunchAgents/`;
+private SSH diagnostics are in `~/Library/Logs/HeyRoute/ssh.log`. Both are outside
+this repo, with user-only permissions. Logs can grow during sustained failures;
+inspect them locally. Python and the checkout are not needed by the running job.
+Disabling HeyRoute in Chrome does not stop SSH; use the stop command too.
 
 Enable routing from HeyRoute. The **Routing enabled** label means Chrome has
 installed the rules; it does not prove the SSH tunnel is connected.
@@ -81,7 +112,7 @@ disable its authentication to solve this.
 
 ## Development
 
-Use Node.js 22+:
+Use Node.js 22+ and Python 3.9+:
 
 ```sh
 npm ci

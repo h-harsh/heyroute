@@ -22,3 +22,14 @@ connections remain outside the guarantee and must be documented.
 ## 2026-10-09 — initial-routing/mit-license (provisional)
 The owner selected MIT for public reuse. Keep the copyright and license notice
 with distributed source and extension archives.
+
+## 2026-10-09 — D-automatic-reconnection (provisional)
+Use the built-in macOS user LaunchAgent manager to supervise system OpenSSH.
+KeepAlive restarts SSH; server keepalives detect dead connections. Bounded
+connection attempts and launch throttling avoid a tight failure loop. A private
+local plist holds the existing alias, not keys/passwords. Noninteractive SSH is
+preflighted before installation; no extra browser permissions or packages.
+Stop disables login startup; uninstall retains diagnostics. Authentication or
+network blocks still require owner action. Physical sleep/wake and login startup
+need separate observation. If changing this, preserve loopback binding, normal
+host verification, explicit stop semantics and the public/private boundary.

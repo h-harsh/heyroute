@@ -44,6 +44,18 @@ Keep keys outside the repository. Do not disable host-key verification or
 TLS validation for real websites. The self-signed TLS bypass in automated tests
 applies only to a disposable test browser, never to installation instructions.
 
+## Optional managed connection
+
+The macOS user LaunchAgent runs system OpenSSH independently of Chrome. It starts
+at login and retries failed connections with launch throttling. Noninteractive
+authentication is preflighted; it never stores credentials or accepts unknown
+host keys automatically. The generated plist contains a local SSH alias, and
+logs can contain private host/user diagnostics. Both remain outside public source
+with user-only permissions. Stop also disables login startup; uninstall removes
+only the validated job config and retains logs. Disabling the browser extension
+does not stop the SSH process. Keys, agent unlocking and network access remain
+the owner's existing setup; retries cannot resolve blocked or revoked access.
+
 ## Reporting
 
 Do not post credentials, personal hostnames, profile data, or network captures

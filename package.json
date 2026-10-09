@@ -7,7 +7,7 @@
   "type": "module",
   "engines": { "node": ">=22" },
   "scripts": {
-    "test": "node --test tests/core.test.js tests/controller.test.js tests/public-check.test.js tests/commit.test.js",
+    "test": "node --test tests/core.test.js tests/controller.test.js tests/public-check.test.js tests/commit.test.js && python3 -m unittest discover -s tests -p 'test_*.py'",
     "check": "node scripts/check.mjs",
     "test:browser": "node tests/browser-smoke.mjs",
     "package": "node scripts/package.mjs",

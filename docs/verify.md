@@ -3,8 +3,9 @@
 ## Automated gates
 
 1. `npm test` → all routing, controller, public-content, and commit-convention
-   tests pass; invalid input, conflicts, and failed settings persistence are covered.
-2. `npm run check` → syntax passes; exactly proxy/storage permissions; no host
+   JavaScript and Python tests pass; invalid input, conflicts, failed persistence,
+   manager lifecycle/rollback and recent TCP connection closure are covered.
+2. `npm run check` → JavaScript/Python syntax passes; exactly proxy/storage permissions; no host
    access, runtime network calls, sync storage, or common personal artifacts.
 3. `npm run test:browser` → actual extension loads into an isolated Chromium
    profile. HTTP, HTTPS, WS, WSS selected requests use the test SOCKS fixture;
@@ -18,6 +19,28 @@
 
 Install development dependencies with `npm ci`; install the matching Chromium
 with `npx playwright install chromium` if unavailable. These are test-only.
+Python 3.9+ is required for connection-manager tests and syntax checks.
+
+## Managed connection on macOS
+
+Use your own alias in place of `private-server`; stop foreground SSH first.
+
+1. `python3 scripts/macos-connection.py install private-server` → private user
+   plist created, noninteractive authentication preflight passes, job loads.
+2. `python3 scripts/macos-connection.py status` after SSH negotiates → loaded
+   job and responding loopback SOCKS listener; verify a real TLS-valid private page.
+3. `launchctl kill SIGTERM gui/$(id -u)/io.heyroute.ssh` → a different managed
+   SSH PID appears; SOCKS and private page access recover without starting SSH manually.
+4. `python3 scripts/macos-connection.py stop` → job remains unloaded beyond the
+   retry interval; fresh selected page fails while unselected browsing works.
+5. `python3 scripts/macos-connection.py start` → listener/page recover and login
+   startup is enabled again. Test a harmless terminal echo if the app has WSS.
+6. Optional uninstall/reinstall → config removed, logs retained, other jobs unaffected.
+   Lifecycle automation covers uninstall; do not remove the owner's working service
+   solely to repeat it. Observe physical login and sleep/wake separately.
+
+Keep generated config and logs outside Git. Status is not proof of remote app
+health; ON in Chrome is not proof of SSH. Normal SSH/TLS validation must remain.
 
 ## Existing profile acceptance (not covered by fixtures)
 

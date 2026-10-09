@@ -11,3 +11,5 @@ graphify-out/
 *.har
 *.log
 .DS_Store
+__pycache__/
+*.pyc
