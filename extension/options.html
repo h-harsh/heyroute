@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>HeyRoute settings</title><link rel="stylesheet" href="ui.css"></head>
+<body>
+  <main class="settings">
+    <header><span class="mark" aria-hidden="true">↗</span><div><h1>HeyRoute</h1><p class="subtitle">Your sites. Your connection.</p></div></header>
+    <section class="status" aria-label="Routing status"><h2 id="state">Loading settings…</h2><p id="detail"></p><p id="recent-error" role="status"></p></section>
+    <form id="settings-form">
+      <h2>Local proxy</h2><p>Start your SSH SOCKS5 connection before using a private site.</p>
+      <div class="fields"><label>Host<input value="127.0.0.1" readonly aria-describedby="local-only"></label><label>Port<input id="port" type="number" min="1" max="65535" required value="1080"></label></div>
+      <p class="hint" id="local-only">Loopback only. SSH handles authentication outside Chrome.</p>
+      <label for="domains">Private hostnames</label>
+      <textarea id="domains" rows="7" placeholder="app.example.com&#10;*.internal.example.com" spellcheck="false" autocapitalize="off" aria-describedby="domain-help"></textarea>
+      <p class="hint" id="domain-help">One per line, up to 100. Exact hostnames only. *.example.com matches subdomains, not example.com. No URLs or IP addresses.</p>
+      <div class="notice"><strong>Other sites use direct connections.</strong><p>They still follow your network’s VPN routes. A separate system or corporate web proxy is not preserved while HeyRoute is enabled.</p>
+        <label class="check"><input id="acknowledge" type="checkbox"><span>I understand, and this profile does not require a separate corporate web proxy.</span></label>
+      </div>
+      <div class="buttons"><button type="submit" id="save">Save settings</button><button type="button" class="secondary" id="toggle">Enable routing</button></div>
+    </form>
+    <p id="feedback" role="status" aria-live="polite"></p>
+    <footer><p>Settings stay in this browser profile. No accounts, telemetry, or page access.</p><p>After routing changes, reload affected tabs and close old interactive sessions.</p><button type="button" class="text-button" id="reset">Remove local settings</button></footer>
+  </main>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "HeyRoute",
+  "version": "0.1.0",
+  "description": "Route selected websites through your own local SSH SOCKS5 proxy.",
+  "minimum_chrome_version": "120",
+  "permissions": ["proxy", "storage"],
+  "incognito": "not_allowed",
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": { "default_title": "HeyRoute", "default_popup": "popup.html" },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; connect-src 'none'"
+  }
+}

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>HeyRoute</title><link rel="stylesheet" href="ui.css"></head>
+<body class="popup">
+  <main><header><span class="mark" aria-hidden="true">↗</span><h1>HeyRoute</h1></header>
+    <section class="status"><h2 id="state">Loading…</h2><p id="detail"></p><p id="recent-error" role="status"></p></section>
+    <div class="buttons"><button id="toggle" disabled>Enable routing</button><button class="secondary" id="settings">Settings</button></div>
+    <p id="feedback" role="status" aria-live="polite"></p><p class="hint">Only this profile’s browser requests. Start SSH separately.</p>
+  </main><script type="module" src="popup.js"></script>
+</body>
+</html>

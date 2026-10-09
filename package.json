@@ -1,0 +1,17 @@
+{
+  "name": "heyroute",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Route selected browser domains through your own local SSH SOCKS proxy.",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tests/core.test.js tests/controller.test.js tests/public-check.test.js tests/commit.test.js",
+    "check": "node scripts/check.mjs",
+    "test:browser": "node tests/browser-smoke.mjs",
+    "package": "node scripts/package.mjs",
+    "setup:hooks": "node scripts/setup-hooks.mjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}
